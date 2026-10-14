@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#145c49">
+  <title>برتر نت 45 | فرم درخواست خدمات</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 20px 12px 35px;
+      font-family: Tahoma, Arial, sans-serif;
+      background: #edf2f0;
+      color: #202b27;
+      line-height: 1.9;
+    }
+
+    .container {
+      max-width: 560px;
+      margin: auto;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #145c49, #24856b);
+      color: white;
+      padding: 27px 20px;
+      border-radius: 18px 18px 0 0;
+      text-align: center;
+    }
+
+    .logo {
+      width: 68px;
+      height: 68px;
+      margin: auto auto 10px;
+      display: grid;
+      place-items: center;
+      border: 2px solid #ffffffa0;
+      border-radius: 50%;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    h1 { margin: 0; font-size: 25px; }
+    .header p { margin: 5px 0 0; font-size: 14px; }
+
+    .contact {
+      background: white;
+      padding: 15px 20px;
+      border-bottom: 1px solid #e2e8e5;
+      font-size: 13px;
+    }
+
+    .contact div { margin: 5px 0; }
+    .contact a {
+      color: #176b55;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .content {
+      background: white;
+      padding: 22px;
+      border-radius: 0 0 18px 18px;
+      box-shadow: 0 8px 28px #153e3010;
+    }
+
+    .notice {
+      padding: 13px;
+      background: #fff8e7;
+      border: 1px solid #f2dfad;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    h2 { font-size: 19px; margin: 0 0 5px; }
+    .intro { color: #64746d; font-size: 13px; margin-top: 0; }
+
+    label {
+      display: block;
+      margin: 16px 0 7px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5d1;
+      border-radius: 9px;
+      background: #fff;
+      font: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #24856b;
+      box-shadow: 0 0 0 3px #24856b18;
+    }
+
+    textarea { min-height: 105px; resize: vertical; }
+
+    .hint {
+      font-size: 12px;
+      color: #68776f;
+      margin-top: 5px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 13px;
+      background: #176b55;
+      color: white;
+      border: 0;
+      border-radius: 9px;
+      font: inherit;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled { opacity: .6; cursor: wait; }
+
+    #result {
+      margin-top: 12px;
+      font-size: 13px;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #738078;
+      margin-top: 20px;
+    }
+
+    .footer a { color: #176b55; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main class="container">
+
+    <header class="header">
+      <div class="logo">45</div>
+      <h1>برتر نت 45</h1>
+      <p>فرم آنلاین ثبت درخواست خدمات</p>
+    </header>
+
+    <section class="contact">
+      <div>📍 آدرس: شهرک مطهری، بلوار کرامت شمالی، جنب کوچه 7</div>
+      <div>☎️ تلفن تماس:
+        <a href="tel:09214936230">09214936230</a>
+      </div>
+      <div>📱 روبیکا: <a href="https://rubika.ir/bartarnet45"
+        target="_blank" rel="noopener">bartarnet45</a></div>
+    </section>
+
+    <section class="content">
+      <div class="notice">
+        <strong>توجه:</strong>
+        لطفاً اطلاعات خود را با دقت وارد کنید.
+        پس از ثبت درخواست، برای پیگیری با شما تماس گرفته خواهد شد.
+      </div>
+
+      <h2>ثبت درخواست خدمات</h2>
+      <p class="intro">
+        خدمت موردنظر خود را انتخاب کرده و مشخصاتتان را وارد کنید.
+      </p>
+
+      <form id="serviceForm">
+        <label for="name">نام و نام خانوادگی *</label>
+        <input id="name" name="name" required maxlength="100"
+          autocomplete="name" placeholder="نام کامل خود را وارد کنید">
+
+        <label for="phone">شماره موبایل *</label>
+        <input id="phone" name="phone" type="tel" required
+          inputmode="numeric" maxlength="11"
+          pattern="09[0-9]{9}" placeholder="09123456789"
+          title="شماره موبایل باید ۱۱ رقم و با 09 شروع شود">
+
+        <label for="service">نوع خدمات درخواستی *</label>
+        <select id="service" name="service" required>
+          <option value="">انتخاب نوع خدمات</option>
+          <option value="کالابرگ">کالابرگ</option>
+          <option value="تعویض پلاک">تعویض پلاک</option>
+          <option value="درخواست جواز">درخواست جواز</option>
+        </select>
+
+        <label for="description">توضیحات درخواست</label>
+        <textarea id="description" name="description"
+          maxlength="1500"
+          placeholder="اگر توضیحی دارید اینجا بنویسید..."></textarea>
+        <p class="hint">موارد ستاره‌دار الزامی هستند.</p>
+
+        <button id="submitBtn" type="submit">
+          ثبت و ارسال درخواست
+        </button>
+        <div id="result" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <footer class="footer">
+      برتر نت 45 | ارائه خدمات اینترنتی و ثبت درخواست آنلاین
+      <br>
+      <a href="tel:09214936230">تماس با ما: 09214936230</a>
+    </footer>
+  </main>
+
+  <script>
+    // پس از ساخت Worker، آدرس واقعی آن را اینجا قرار بده.
+    const API_URL =
+      "https://YOUR-WORKER.YOUR-SUBDOMAIN.workers.dev";
+
+    const form = document.getElementById("serviceForm");
+    const button = document.getElementById("submitBtn");
+    const result = document.getElementById("result");
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      if (!form.reportValidity()) return;
+
+      const data = {
+        name: document.getElementById("name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        service: document.getElementById("service").value,
+        description:
+          document.getElementById("description").value.trim()
+      };
+
+      if (!/^09\d{9}$/.test(data.phone)) {
+        result.textContent = "شماره موبایل واردشده معتبر نیست.";
+        return;
+      }
+
+      if (API_URL.includes("YOUR-WORKER")) {
+        result.textContent =
+          "فرم هنوز به سامانه ارسال متصل نشده است.";
+        return;
+      }
+
+      button.disabled = true;
+      result.textContent = "در حال ارسال درخواست...";
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const answer = await response.json();
+
+        if (!response.ok || !answer.ok) {
+          throw new Error("ارسال ناموفق بود");
+        }
+
+        result.textContent =
+          "درخواست شما با موفقیت ثبت شد. سپاس از اعتماد شما.";
+        form.reset();
+      } catch (error) {
+        result.textContent =
+          "ارسال انجام نشد. لطفاً دوباره تلاش کنید یا تماس بگیرید.";
+      } finally {
+        button.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
