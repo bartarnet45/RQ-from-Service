@@ -227,65 +227,136 @@
     </footer>
   </main>
 
-  <script>
-    // پس از ساخت Worker، آدرس واقعی آن را اینجا قرار بده.
-    const API_URL =
-      "https://bartarnet45-form-api.areza-bfn.workers.dev/";
+  
+<script>
+const API_URL = "https://bartarnet45-form-api.areza-bfn.workers.dev/";
 
-    const form = document.getElementById("serviceForm");
-    const button = document.getElementById("submitBtn");
-    const result = document.getElementById("result");
+const form = document.getElementById("serviceForm");
+const button = document.getElementById("submitBtn");
+const result = document.getElementById("result");
+const filesInput = document.getElementById("files");
+const fileList = document.getElementById("fileList");
 
-    form.addEventListener("submit", async function (event) {
-      event.preventDefault();
+const MAX_FILES = 3;
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
+const MAX_TOTAL_SIZE = 30 * 1024 * 1024;
+const allowedExtension = /\.(jpe?g|png|webp|gif|heic|heif|pdf)$/i;
 
-      if (!form.reportValidity()) return;
+function validateFiles(showMessage = true) {
+  const files = Array.from(filesInput.files);
 
-      const data = {
-        name: document.getElementById("name").value.trim(),
-        phone: document.getElementById("phone").value.trim(),
-        service: document.getElementById("service").value,
-        description:
-          document.getElementById("description").value.trim()
-      };
+  if (files.length > MAX_FILES) {
+    if (showMessage) {
+      result.textContent = "حداکثر می‌توانید ۳ فایل انتخاب کنید.";
+    }
+    return false;
+  }
 
-      if (!/^09\d{9}$/.test(data.phone)) {
-        result.textContent = "شماره موبایل واردشده معتبر نیست.";
-        return;
-      }
+  let totalSize = 0;
 
-      if (API_URL.includes("YOUR-WORKER")) {
+  for (const file of files) {
+    totalSize += file.size;
+
+    if (!allowedExtension.test(file.name)) {
+      if (showMessage) {
         result.textContent =
-          "فرم هنوز به سامانه ارسال متصل نشده است.";
-        return;
+          "فقط عکس‌های مجاز و فایل PDF قابل ارسال هستند.";
       }
+      return false;
+    }
 
-      button.disabled = true;
-      result.textContent = "در حال ارسال درخواست...";
-
-      try {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
-
-        const answer = await response.json();
-
-        if (!response.ok || !answer.ok) {
-          throw new Error("ارسال ناموفق بود");
-        }
-
+    if (file.size > MAX_FILE_SIZE) {
+      if (showMessage) {
         result.textContent =
-          "درخواست شما با موفقیت ثبت شد. سپاس از اعتماد شما.";
-        form.reset();
-      } catch (error) {
-        result.textContent =
-          "ارسال انجام نشد. لطفاً دوباره تلاش کنید یا تماس بگیرید.";
-      } finally {
-        button.disabled = false;
+          `حجم فایل «${file.name}» بیشتر از ۱۰ مگابایت است.`;
       }
+      return false;
+    }
+  }
+
+  if (totalSize > MAX_TOTAL_SIZE) {
+    if (showMessage) {
+      result.textContent =
+        "مجموع حجم فایل‌ها نباید بیشتر از ۳۰ مگابایت باشد.";
+    }
+    return false;
+  }
+
+  return true;
+}
+
+filesInput.addEventListener("change", () => {
+  result.textContent = "";
+
+  if (!validateFiles()) {
+    filesInput.value = "";
+    fileList.textContent = "";
+    return;
+  }
+
+  const files = Array.from(filesInput.files);
+
+  fileList.textContent = files.length
+    ? "فایل‌های انتخاب‌شده: " +
+      files.map(file =>
+        `${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`
+      ).join("، ")
+    : "هنوز فایلی انتخاب نشده است.";
+});
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (!form.reportValidity()) return;
+
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+
+  if (!/^09\d{9}$/.test(phone)) {
+    result.textContent = "شماره موبایل واردشده معتبر نیست.";
+    return;
+  }
+
+  if (!validateFiles()) return;
+
+  button.disabled = true;
+  result.textContent = "در حال ارسال درخواست و فایل‌ها...";
+
+  try {
+    const formData = new FormData(form);
+
+    const response = await fetch(API_URL, {
+      method: "POST",
+      body: formData
     });
-  </script>
+
+    let answer;
+
+    try {
+      answer = await response.json();
+    } catch {
+      throw new Error("پاسخ نامعتبر از سرور");
+    }
+
+    if (!response.ok || !answer.ok) {
+      throw new Error(answer.error || "ارسال ناموفق بود");
+    }
+
+    result.textContent =
+      "درخواست و فایل‌های شما با موفقیت ارسال شد.";
+
+    form.reset();
+    fileList.textContent = "";
+
+  } catch (error) {
+    console.error("Form submission error:", error);
+    result.textContent =
+      "ارسال انجام نشد. لطفاً دوباره تلاش کنید یا تماس بگیرید.";
+  } finally {
+    button.disabled = false;
+  }
+});
+</script>
+
 </body>
 </html>
