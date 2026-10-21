@@ -197,6 +197,22 @@
           placeholder="اگر توضیحی دارید اینجا بنویسید..."></textarea>
         <p class="hint">موارد ستاره‌دار الزامی هستند.</p>
 
+        
+<label for="files">📎 پیوست عکس و مدارک</label>
+<input
+  id="files"
+  name="files"
+  type="file"
+  multiple
+  accept=".jpg,.jpeg,.png,.webp,.gif,.heic,.heif,.pdf,image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif,application/pdf"
+>
+<p class="hint">
+  حداکثر ۳ فایل؛ هر فایل تا ۱۰ مگابایت.
+  فرمت‌های مجاز: عکس و PDF.
+</p>
+<div id="fileList" class="hint"></div>
+
+        
         <button id="submitBtn" type="submit">
           ثبت و ارسال درخواست
         </button>
